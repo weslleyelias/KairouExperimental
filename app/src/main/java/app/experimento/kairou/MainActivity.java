@@ -69,7 +69,8 @@ public class MainActivity extends Activity {
         webView = new WebView(this);
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
+        settings.setJavaScriptCanOpenWindowsAutomatically(false);
+settings.setSupportMultipleWindows(false);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
