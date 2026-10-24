@@ -72,7 +72,37 @@ public class MainActivity extends Activity {
         settings.setJavaScriptCanOpenWindowsAutomatically(false);
 settings.setSupportMultipleWindows(false);
 
-        webView.setWebViewClient(new WebViewClient() {
+                webView.setWebViewClient(new WebViewClient() {
+            private boolean isKairou(String url) {
+                String host = Uri.parse(url).getHost();
+                return host != null &&
+                    (host.equalsIgnoreCase("kairou.space") ||
+                     host.toLowerCase().endsWith(".kairou.space"));
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(
+                    WebView view, WebResourceRequest request) {
+                Uri uri = request.getUrl();
+                if (!"https".equalsIgnoreCase(uri.getScheme()) &&
+                    !"http".equalsIgnoreCase(uri.getScheme())) {
+                    return true;
+                }
+                if (!request.isForMainFrame()) return false;
+                return !isKairou(uri.toString());
+            }
+
+            @Override
+            @SuppressWarnings("deprecation")
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Uri uri = Uri.parse(url);
+                if (!"https".equalsIgnoreCase(uri.getScheme()) &&
+                    !"http".equalsIgnoreCase(uri.getScheme())) {
+                    return true;
+                }
+                return !isKairou(url);
+            }
+
             @Override
             public WebResourceResponse shouldInterceptRequest(
                     WebView view, WebResourceRequest request) {
