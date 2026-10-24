@@ -2,7 +2,6 @@ package app.experimento.kairou;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Build;
 import android.graphics.Color;
 import android.view.View;
 import android.view.Gravity;
@@ -15,8 +14,8 @@ import android.webkit.WebResourceResponse;
 import android.net.Uri;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.window.OnBackInvokedCallback;
-import android.window.OnBackInvokedDispatcher;
+import android.widget.Button;
+import android.widget.Toast;
 import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +31,12 @@ public class MainActivity extends Activity {
         "googletagservices.com",
         "adnxs.com",
         "amazon-adsystem.com",
-        "adservice.google.com"
+        "adservice.google.com",
+        "adform.net",
+        "taboola.com",
+        "outbrain.com",
+        "popads.net",
+        "propellerads.com"
     );
 
     private boolean isAdUrl(String url) {
@@ -47,11 +51,11 @@ public class MainActivity extends Activity {
         return false;
     }
 
-    private void goBackOrExit() {
+    private void voltar() {
         if (webView != null && webView.canGoBack()) {
             webView.goBack();
         } else {
-            finish();
+            Toast.makeText(this, "Não há página anterior", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -60,7 +64,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         FrameLayout layout = new FrameLayout(this);
-        layout.setBackgroundColor(Color.WHITE);
+        layout.setBackgroundColor(Color.BLACK);
 
         webView = new WebView(this);
         WebSettings settings = webView.getSettings();
@@ -83,14 +87,31 @@ public class MainActivity extends Activity {
         progressBar = new ProgressBar(
             this, null, android.R.attr.progressBarStyleHorizontal);
 
-        FrameLayout.LayoutParams progressParams =
-            new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, 8, Gravity.TOP);
-
         layout.addView(webView, new FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.MATCH_PARENT));
+
+        FrameLayout.LayoutParams progressParams =
+            new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, 8, Gravity.TOP);
         layout.addView(progressBar, progressParams);
+
+        Button backButton = new Button(this);
+        backButton.setText("← Voltar");
+        backButton.setTextColor(Color.WHITE);
+        backButton.setBackgroundColor(Color.rgb(25, 110, 190));
+        backButton.setAllCaps(false);
+        backButton.setElevation(12f);
+        backButton.setOnClickListener(v -> voltar());
+
+        FrameLayout.LayoutParams buttonParams =
+            new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.TOP | Gravity.START);
+        buttonParams.setMargins(16, 24, 0, 0);
+        layout.addView(backButton, buttonParams);
+
         setContentView(layout);
 
         webView.setWebChromeClient(new WebChromeClient() {
@@ -102,23 +123,16 @@ public class MainActivity extends Activity {
             }
         });
 
-        if (Build.VERSION.SDK_INT >= 33) {
-            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
-                OnBackInvokedDispatcher.PRIORITY_DEFAULT,
-                new OnBackInvokedCallback() {
-                    @Override
-                    public void onBackInvoked() {
-                        goBackOrExit();
-                    }
-                });
-        }
-
         webView.loadUrl("https://www.kairou.space/");
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public void onBackPressed() {
-        goBackOrExit();
+        if (webView != null && webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
