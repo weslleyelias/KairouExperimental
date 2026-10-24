@@ -96,20 +96,25 @@ public class MainActivity extends Activity {
                 FrameLayout.LayoutParams.MATCH_PARENT, 8, Gravity.TOP);
         layout.addView(progressBar, progressParams);
 
-        Button backButton = new Button(this);
-        backButton.setText("← Voltar");
+                Button backButton = new Button(this);
+        backButton.setText("‹");
+        backButton.setTextSize(32);
         backButton.setTextColor(Color.WHITE);
-        backButton.setBackgroundColor(Color.rgb(25, 110, 190));
+        backButton.setPadding(0, 0, 0, 5);
         backButton.setAllCaps(false);
-        backButton.setElevation(12f);
+        backButton.setBackgroundTintList(
+            android.content.res.ColorStateList.valueOf(
+                Color.argb(175, 25, 110, 190)));
+        backButton.setElevation(8f);
         backButton.setOnClickListener(v -> voltar());
 
+        int buttonSize = (int) (44 * getResources().getDisplayMetrics().density);
         FrameLayout.LayoutParams buttonParams =
             new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                Gravity.TOP | Gravity.START);
-        buttonParams.setMargins(16, 24, 0, 0);
+                buttonSize, buttonSize, Gravity.BOTTOM | Gravity.START);
+        buttonParams.setMargins(
+            (int)(10 * getResources().getDisplayMetrics().density), 0, 0,
+            (int)(18 * getResources().getDisplayMetrics().density));
         layout.addView(backButton, buttonParams);
 
         setContentView(layout);
