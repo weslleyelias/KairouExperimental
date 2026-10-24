@@ -7,7 +7,7 @@ on:
 
 permissions:
   contents: read
- njobs:
+njobs:
   build:
     runs-on: ubuntu-latest
     steps:
