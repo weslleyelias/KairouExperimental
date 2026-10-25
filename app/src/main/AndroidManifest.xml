@@ -6,7 +6,7 @@
         android:label="Kairou"
         android:icon="@drawable/ic_kairou"
         android:roundIcon="@drawable/ic_kairou"
-        android:theme="@android:style/Theme.Material.Light.NoActionBar"
+        android:theme="@style/KairouTheme"
         android:usesCleartextTraffic="false">
 
         <activity
