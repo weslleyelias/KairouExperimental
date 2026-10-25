@@ -1,0 +1,9 @@
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/kairou_background" />
+    <item
+        android:drawable="@drawable/ic_kairou"
+        android:width="144dp"
+        android:height="144dp"
+        android:gravity="center" />
+</layer-list>
