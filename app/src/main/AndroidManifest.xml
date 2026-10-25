@@ -3,7 +3,7 @@
 
     <application
         android:allowBackup="false"
-        android:label="Kairou Experimental"
+        android:label="Kairou"
         android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:usesCleartextTraffic="false">
         <activity
