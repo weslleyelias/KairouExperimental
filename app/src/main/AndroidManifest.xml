@@ -4,15 +4,20 @@
     <application
         android:allowBackup="false"
         android:label="Kairou"
+        android:icon="@drawable/ic_kairou"
+        android:roundIcon="@drawable/ic_kairou"
         android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:usesCleartextTraffic="false">
+
         <activity
             android:name="app.experimento.kairou.MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 </manifest>
